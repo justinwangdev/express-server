@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 const { response } = require('express');
 const { text } = require('body-parser');
 var router = express.Router();
+const fetch = require("node-fetch");
 
 const connection = mysql.createPool({
     host: '192.168.1.123',
