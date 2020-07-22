@@ -1,7 +1,8 @@
 select
     containerflow.workno,
     codetable.name,
-    containerflow.containerno
+    containerflow.containerno,
+    containerflow.goweight
 from
     containerflow,
     codetable
