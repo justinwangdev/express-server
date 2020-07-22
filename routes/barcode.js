@@ -20,7 +20,7 @@ router.get('/codetable', function(req, res, next) {
     });
 });
 
-router.get('/test', function(req, res, next) {
+router.all('/test', function(req, res, next) {
     fetch('http://192.168.1.123:3000/checkProcedure.sql')
         .then(response => response.text())
         .then(text => {
@@ -38,11 +38,10 @@ router.get('/test', function(req, res, next) {
             connection.getConnection(function(err, connection) {
                 connection.query(sql, function(error, results, fields) {
                     if (error) throw error;
-                    console.log(results)
+                    res.send(results)
                 });
             });
         });
-
 });
 
 module.exports = router;
