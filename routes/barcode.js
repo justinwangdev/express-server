@@ -1,8 +1,6 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-const { response } = require('express');
-const { text } = require('body-parser');
 var router = express.Router();
 const fetch = require("node-fetch");
 
