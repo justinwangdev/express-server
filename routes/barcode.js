@@ -21,12 +21,13 @@ router.get('/codetable', function(req, res, next) {
 });
 
 router.all('/test', function(req, res, next) {
-    var sql;
+    var where = "where ";
     fetch('http://192.168.1.123:3000/sample.sql')
         .then(response => response.text())
         .then(text => {
+            var sql = text;
             connection.getConnection(function(err, connection) {
-                connection.query(text, function(error, results, fields) {
+                connection.query(sql, function(error, results, fields) {
                     if (error) throw error;
                     res.send(results)
                 });
