@@ -1,4 +1,3 @@
-use mhs;
 select
     a.workno,
     b.name,
@@ -6,9 +5,9 @@ select
 from
     containerflow a,
     codetable b
+order by
+    containerno
 where
     b.code = 'H'
     and b.value = a.flowno
     and workno = '10809023'
-order by
-    containerno;
