@@ -24,6 +24,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/barcode', codetableRouter);
 
+app.use(express.static('sqls'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
