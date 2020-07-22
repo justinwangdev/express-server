@@ -25,15 +25,15 @@ router.all('/test', function(req, res, next) {
         .then(response => response.text())
         .then(text => {
             var sql = text;
-            var where = " where containerflow.workno = \"";
+            var where = " and containerflow.workno = \"";
             var tmp = req.body.workno;
             where = where.concat(tmp);
-            where = where.concat("\" and containerflow.containerno = \"");
-            tmp = req.body.containerno;
-            where = where.concat(tmp);
-            where = where.concat("\" and containerflow.flowno = \"");
-            tmp = req.body.procedureCode;
-            where = where.concat(tmp);
+            // where = where.concat("\" and containerflow.containerno = \"");
+            // tmp = req.body.containerno;
+            // where = where.concat(tmp);
+            // where = where.concat("\" and containerflow.flowno = \"");
+            // tmp = req.body.procedureCode;
+            // where = where.concat(tmp);
             where = where.concat("\"");
             sql = sql.concat(where);
             connection.getConnection(function(err, connection) {
