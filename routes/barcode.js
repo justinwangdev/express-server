@@ -39,7 +39,7 @@ router.all('/test', function(req, res, next) {
             connection.getConnection(function(err, connection) {
                 connection.query(sql, function(error, results, fields) {
                     if (error) throw error;
-                    console.log(results)
+                    res.send(results)
                 });
             });
         });
