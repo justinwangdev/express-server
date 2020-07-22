@@ -20,7 +20,7 @@ router.get('/codetable', function(req, res, next) {
     });
 });
 
-router.post('/test', function(req, res, next) {
+router.get('/test', function(req, res, next) {
     fetch('http://192.168.1.123:3000/checkProcedure.sql')
         .then(response => response.text())
         .then(text => {
