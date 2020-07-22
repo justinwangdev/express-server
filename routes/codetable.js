@@ -25,4 +25,9 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.post('/test', function(req, res, next) {
+    res.send('respond with a resource');
+    console.log(req.body);
+});
+
 module.exports = router;
