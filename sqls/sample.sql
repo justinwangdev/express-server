@@ -1,13 +1,13 @@
 select
-    a.workno,
-    b.name,
-    a.containerno
+    containerflow.workno,
+    codetable.name,
+    containerflow.containerno
 from
-    containerflow a,
-    codetable b
+    containerflow,
+    codetable
+where
+    codetable.code = 'H'
+    and codetable.value = containerflow.flowno
+    and containerflow.workno = '10809023'
 order by
     containerno
-where
-    b.code = 'H'
-    and b.value = a.flowno
-    and workno = '10809023'
