@@ -1,6 +1,8 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+const { response } = require('express');
+const { text } = require('body-parser');
 var router = express.Router();
 
 const connection = mysql.createPool({
@@ -11,23 +13,18 @@ const connection = mysql.createPool({
 });
 
 router.get('/codetable', function(req, res, next) {
-    // Connecting to the database.
     connection.getConnection(function(err, connection) {
-
-        // Executing the MySQL query (select all data from the 'users' table).
         connection.query("select Name, Value from codetable where Code='H' and Tag='0YY' order by Value;", function(error, results, fields) {
-            // If some error occurs, we throw an error.
             if (error) throw error;
-
-            // Getting the 'response' from the database and sending it to our route. This is were the data is.
             res.send(results)
         });
     });
 });
 
-router.post('/test', function(req, res, next) {
-    console.log(req.body);
-    console.log(req.body.weight);
+router.all('/test', function(req, res, next) {
+    fetch('../sqls/sample.sql')
+        .then(response => response.text())
+        .then(text => res.send(text))
 });
 
 module.exports = router;
