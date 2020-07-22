@@ -21,7 +21,7 @@ router.get('/codetable', function(req, res, next) {
 });
 
 router.all('/test', function(req, res, next) {
-    fetch('192.168.1.123/sample.sql')
+    fetch('http://192.168.1.123:3000/sample.sql')
         .then(response => response.text())
         .then(text => res.send(text))
 });
