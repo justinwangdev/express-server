@@ -10,7 +10,7 @@ const connection = mysql.createPool({
     database: 'mhs'
 });
 
-router.get('/', function(req, res, next) {
+router.get('/codetable', function(req, res, next) {
     // Connecting to the database.
     connection.getConnection(function(err, connection) {
 
