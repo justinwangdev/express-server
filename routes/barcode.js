@@ -21,11 +21,20 @@ router.get('/codetable', function(req, res, next) {
 });
 
 router.all('/test', function(req, res, next) {
-    var where = "where ";
-    fetch('http://192.168.1.123:3000/sample.sql')
+    fetch('http://192.168.1.123:3000/checkProcedure.sql')
         .then(response => response.text())
         .then(text => {
             var sql = text;
+            var where = "where containerflow.workno = ";
+            var tmp = req.body.workno;
+            where = where.concat(tmp);
+            where = where.concat(" and containerflow.containerno = ");
+            tmp = req.body.containerno;
+            where = where.concat(tmp);
+            where = where.concat(" and containerflow.flowno = ");
+            tmp = req.body.procedureCode;
+            where = where.concat(tmp);
+            sql = sql.concat(where);
             connection.getConnection(function(err, connection) {
                 connection.query(sql, function(error, results, fields) {
                     if (error) throw error;

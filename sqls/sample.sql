@@ -1,6 +1,7 @@
 select
     containerflow.workno,
     codetable.name,
+    codetable.value,
     containerflow.containerno
 from
     containerflow,
