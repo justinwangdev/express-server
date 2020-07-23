@@ -12,30 +12,82 @@ const connection = mysql.createPool({
 });
 
 router.get('/codetable', function(req, res, next) {
-    connection.getConnection(function(err, connection) {
-        connection.query("select Name, Value from codetable where Code='H' and Tag='0YY' order by Value;", function(error, results, fields) {
-            if (error) throw error;
-            res.send(results)
-        });
-    });
+    fetch('http://192.168.1.123:3000/codetable.sql')
+        .then(response => response.text())
+        .then(text => {
+            sql = text;
+            connection.getConnection(function(err, connection) {
+                connection.query(sql, function(error, results, fields) {
+                    if (error) throw error;
+                    res.send(results)
+                });
+            });
+        })
 });
 
-router.all('/test', function(req, res, next) {
+router.all('/checking', function(req, res, next) {
     fetch('http://192.168.1.123:3000/checkProcedure.sql')
         .then(response => response.text())
         .then(text => {
             var sql = text;
-            var where = " and containerflow.workno = \"";
+            var where = "\n and containerflow.workno = \'";
             var tmp = req.body.workno;
             where = where.concat(tmp);
-            where = where.concat("\" and containerflow.containerno = \"");
+            where = where.concat("\'\n and containerflow.containerno = \'");
             tmp = req.body.containerno;
             where = where.concat(tmp);
-            where = where.concat("\" and codetable.value = \"");
+            where = where.concat("\'\n and codetable.value = \'");
             tmp = req.body.procedureCode;
             where = where.concat(tmp);
-            where = where.concat("\"");
+            where = where.concat("\'");
             sql = sql.concat(where);
+            console.log(sql);
+            connection.getConnection(function(err, connection) {
+                connection.query(sql, function(error, results, fields) {
+                    if (error) throw error;
+                    res.send(results)
+                });
+            });
+        });
+});
+
+router.all('/inserting', function(req, res, next) {
+    fetch('http://192.168.1.123:3000/sendInsertion.sql')
+        .then(response => response.text())
+        .then(text => {
+            var sql = text;
+            var values = req.body.workno;
+            values = values.concat("\', \'");
+            values = values.concat(req.body.containerno);
+            values = values.concat("\', ");
+            values = values.concat(req.body.procedureCode);
+            values = values.concat(", \'");
+            values = values.concat(req.body.weight);
+            values = values.concat("\')");
+            sql = sql.concat(values);
+            connection.getConnection(function(err, connection) {
+                connection.query(sql, function(error, results, fields) {
+                    if (error) throw error;
+                    res.send(results)
+                });
+            });
+        });
+});
+
+router.all('/updating', function(req, res, next) {
+    fetch('http://192.168.1.123:3000/sendUpdate.sql')
+        .then(response => response.text())
+        .then(text => {
+            var sql = text;
+            var values = req.body.weight;
+            values = values.concat("\', flowno=\'");
+            values = values.concat(req.body.procedureCode);
+            values = values.concat("\'\n where workno=\'");
+            values = values.concat(req.body.workno);
+            values = values.concat("\' and containerno=\'");
+            values = values.concat(req.body.containerno);
+            values = values.concat("\';")
+            sql = sql.concat(values);
             connection.getConnection(function(err, connection) {
                 connection.query(sql, function(error, results, fields) {
                     if (error) throw error;

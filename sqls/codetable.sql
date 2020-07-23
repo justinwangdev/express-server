@@ -1,4 +1,3 @@
-use mhs;
 select
     Name,
     Value
@@ -8,5 +7,4 @@ where
     Code = 'H'
     and Tag = '0YY'
 order by
-    Name,
-    SN;
+    Value;

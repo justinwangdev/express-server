@@ -25,3 +25,14 @@ where
     containerflow.workno = "10809023"
     and codetable.value = containerflow.flowno
     and codetable.code = 'H'
+
+select
+    workno,
+    containerno,
+    flowno,
+    goweight
+from
+    containerflow
+where
+    workno = 0000001
+

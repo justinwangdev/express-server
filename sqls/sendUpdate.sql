@@ -1,0 +1,2 @@
+UPDATE containerflow
+SET goweight='
