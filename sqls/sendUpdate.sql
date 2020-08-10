@@ -1,2 +1,0 @@
-UPDATE containerflow
-SET goweight='
