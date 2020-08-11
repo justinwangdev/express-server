@@ -59,4 +59,5 @@ const sqlChecking = (workno, containerno, procedureCode) => {
     return sql;
 }
 
-const sqlCodeTable = `select Name as label, Value as value from codetable where Code = 'H' and Tag = '0YY' order by Value;`;
+const sqlCodeTable = `select Name as label, Value as value from\
+         codetable where Code = 'H' and Tag = '0YY' order by Value;`;
