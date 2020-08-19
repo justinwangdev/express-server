@@ -3,7 +3,7 @@ Express-Server for MHS
 
 ## Installation
 
-> build at FreeBSD 12.1-RELEASE r354233 GENERIC 
+> build at FreeBSD 12.1, Node.js v14.4.0
 
 1. Install Nodejs.
 2. Install pm2 $npm install pm2
