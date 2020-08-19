@@ -1,8 +1,8 @@
 const mysqlConfig = {
-    host: 'your host',
-    user: 'your user',
-    password: 'your password',
-    database: 'your database'
+    host: '192.168.1.123',
+    user: 'justin',
+    password: '22563952',
+    database: 'mhs'
 }
 
 module.exports = {mysqlConfig}; 
