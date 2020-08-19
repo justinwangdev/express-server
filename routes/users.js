@@ -13,7 +13,6 @@ router.all('/name', function (req, res, next) {
         connection.query(sql, function (error, results, fields) {
             if (error) throw error;
             else {
-                console.log(results);
                 res.send(results);
             }
         });
