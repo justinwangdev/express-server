@@ -8,27 +8,76 @@ const { mysqlConfig } = require('../userConfig');
 const connection = mysql.createPool(mysqlConfig);
 
 router.all('/forwarding', function (req, res, next) {
-    var names = [];
-    var values = [];
-    sql = sqlGetWorknoProcedures(req.body.workno);
-    connection.query(sql, function (error, results, fields) {
-        if (error) throw error;
-        if (results.length < 1 || results == undefined)
-            console.log('workno not exist')
-        else {
-            for (i = 1; i <= 14; i++) {
-                if (results[0]["P" + i] != null) {
-                    values.push(results[0]["P" + i]);
-                    names.push(results[0]["N" + i]);
+    var rawData = {};
+    var code = [];
+    var name = [];
+    var containers = [];
+    var product = [];
+
+    connection.getConnection(function (err, connection) {
+        let sql = sqlGetWorknoProcedures(req.body.workno);
+        connection.query(sql, function (error, results, fields) {
+            if (error) throw error;
+            if (results.length < 1 || results == undefined) {
+                console.log('workno not exist')
+                res.send(results);
+            }
+            else {
+                sql = sqlProductDetail(req.body.workno);
+                connection.query(sql, function (error, results, fields) {
+                    product=results;
+                    });
+
+                sql = sqlContainerDetail(req.body.workno);
+                connection.query(sql, function (error, results, fields) {
+                    for (var key in results) {
+                        let containerno = parseInt(results[key].containerno, 10);
+                        if (containers[containerno] == undefined) {
+                            containers.push([containerno, {
+                                flowno: parseInt(results[key].flowno, 10),
+                                goweight: results[key].goweight,
+                                backweight: results[key].backweight
+                            }]);
+                        }
+                        else {
+                            containers[containerno].push({
+                                flowno: parseInt(results[key].flowno, 10),
+                                goweight: results[key].goweight,
+                                backweight: results[key].backweight
+                            })
+                        }
+                    }
+                    rawData = { containers, code, name, product };
+                    res.send(rawData);
+                });
+                for (i = 1; i <= 14; i++) {
+                    if (results[0]["P" + i] != null) {
+                        code.push(results[0]["P" + i]);
+                        name.push(results[0]["N" + i]);
+                    }
                 }
             }
-            data={names, values};
-            res.send(data);
-        }
+        });
     });
 });
 
 module.exports = router;
+
+const sqlProductDetail = (workno) => {
+    sql = `select (Select Name from codetable x where x.code='1' and x.value=b.producttypecode) ProductType,
+    b.spec1, b.spec2,(Select Name from codetable y Where y.code='3' and y.value=b.nutshapecode) nutshape,
+    b.size1, b.size2,b.size3
+     from purchaseorderitem a, item b 
+   where a.itemNo=b.itemNo and a.workno = '${workno}' ;`;
+    return sql;
+}
+
+const sqlContainerDetail = (workno) => {
+    sql = `select containerno, flowno, goweight, backweight
+        from containerflow
+        where workno = '${workno}'`;
+    return sql;
+}
 
 const sqlGetWorknoProcedures = (workno) => {
     sql = `select P.Processing1 P1,   (Select name from codetable where code='H' and value= P.Processing1 )as N1,
@@ -46,6 +95,6 @@ const sqlGetWorknoProcedures = (workno) => {
                 P.Processing13 P13, (Select name from codetable where code='H' and value= P.Processing13 )as N13,
                 P.Processing14 P14, (Select name from codetable where code='H' and value= P.Processing14 )as N14
             from purchaseorderitem P
-            where P.workno = '` + workno + '\'';
+            where P.workno = '${workno}'`;
     return sql;
 }

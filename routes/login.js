@@ -14,7 +14,7 @@ router.all('/checking', function (req, res, next) {
             if (error) throw error;
             if (!(results.length < 1 || results == undefined)) {
                 if (results[0].userPassword == req.body.password.value) {
-                    res.send({ matching: true });
+                    res.send({ matching: true, ID: results[0].EmployeeID });
                 }
                 else {
                     res.status(httpStatus.NOT_FOUND).send({
@@ -36,7 +36,7 @@ router.all('/checking', function (req, res, next) {
 module.exports = router;
 
 const sqlLoggingIn = (userName) => {
-    sql = `select userPassword from userinfo where userinfo.userName = '` +
-        userName + "\';";
+    sql = `select userPassword, EmployeeID from userinfo 
+        where userinfo.userName = '${userName}';`;
     return sql;
 }
