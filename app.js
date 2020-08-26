@@ -9,10 +9,7 @@ var codetableRouter = require('./routes/codetable');
 var containerflowRouter = require('./routes/containerflow');
 var purchaseorderitemRouter = require('./routes/purchaseorderitem');
 var userinfoRouter = require('./routes/userinfo');
-var usersRouter = require('./routes/users');
-var barcodeRouter = require('./routes/barcode');
 var loginRouter = require('./routes/login');
-var queryRouter = require('./routes/query');
 
 var app = express();
 
@@ -31,11 +28,7 @@ app.use('/containerflow', containerflowRouter);
 app.use('/codetable', codetableRouter);
 app.use('/purchaseorderitem', purchaseorderitemRouter);
 app.use('/userInfo', userinfoRouter);
-app.use('/users', usersRouter);
-app.use('/barcode', barcodeRouter);
 app.use('/login', loginRouter);
-app.use('/query', queryRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
