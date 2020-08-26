@@ -7,7 +7,7 @@ var httpStatus = require('http-status');
 const {mysqlConfig} = require ('../userConfig');
 const connection = mysql.createPool(mysqlConfig);
 
-router.all('/checking', function (req, res, next) {
+router.post('/', function (req, res, next) {
     sql = sqlLoggingIn(req.body.username.value);
     connection.getConnection(function (err, connection) {
         connection.query(sql, function (error, results, fields) {
