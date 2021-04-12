@@ -3,7 +3,7 @@ Express-Server for MHS
 
 ## Outline
 
-This is the server built for MHS-APP. Because the APIs were written in RESTful style, the IT department in Ming Hui Sheng Enterprise Co., LTD. can easyly jump on this and develop other features.
+This is the server built for MHS-APP. Because the APIs were written in RESTful style, the IT department in Ming Hui Sheng Enterprise Co., LTD. can easily jump on this and develop other features.
 
 ## Installation
 
