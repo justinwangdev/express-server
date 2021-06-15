@@ -3,7 +3,7 @@ Express-Server for MHS
 
 ## Outline
 
-This is the server built for MHS-APP. Because the APIs were written in RESTful style, the IT department in Ming Hui Sheng Enterprise Co., LTD. can easily jump on this and develop other features.
+This is the server built for MHS-APP. RESTful style APIs makes the code more readable and other engineers can easily jump in.
 
 ## Installation
 
@@ -31,11 +31,5 @@ module.exports = {mysqlConfig};
 ## Usage
 
 `$pm2 start bin/www --watch --max-memory-restart 20M.`
-
-## Appendix and FAQ
-
-:::info
-**Find this document incomplete?** Leave a comment!
-:::
 
 ###### tags: `expressjs`
